@@ -1,0 +1,81 @@
+#!C://python37/python.exe
+print("content-type:text/html\r\n\r\n")
+
+import cgi,cgitb
+import mysql.connector
+my=mysql.connector.connect(
+  host="localhost",
+  user="root",
+  password="",
+  database="batch1db"
+)
+mycursor=my.cursor()
+sel="select * from formtask";
+mycursor.execute(sel)
+data=mycursor.fetchall()
+
+
+print("""
+
+<html>
+<head>
+<link href="css/animate.css" rel="stylesheet"/>
+<link href="css/bootstrap.css" rel="stylesheet"/>
+<link href="css/hover.css" rel="stylesheet"/>
+<link href="css/font-awesome.css" rel="stylesheet"/>
+
+<script src="js/jquery-slim.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/wow.js"></script>
+
+
+</head>
+<body>
+<h1>Show Data</h1>
+<table class="table table-bordered text-center table-success">
+  <tr>
+   <th>ID</th>
+   <th>NAME</th>
+   <th>FATHER NAME</th>
+   <th>MOTHER NAME</th>
+   <th>EMAIL</th>
+   <th>MOBILE</th>
+   <th>ADDRESS</th>
+   <th>PINCODE</th>
+   <th>PASSWORD</th>
+</tr>""")
+ 
+
+for x in data: 
+  print("""
+<tr >
+     <td>%s</td>
+     <td>%s</td>
+     <td>%s</td>
+     <td>%s</td>
+     <td>%s</td>
+     <td>%s</td>
+     <td>%s</td>
+     <td>%s</td>
+     <td>%s</td>
+     <td><a href="delete.py?idd=%s"><button class="btn">Delete</button></a></td>
+     <td><button  href="editcode.py?=%s" class="btn">Edit</button></td>
+</tr>"""%(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[0],x[0]))
+
+print("""
+</table>
+</body>
+
+
+	  
+	  </div>
+	</div>
+  </div>
+ </div>
+
+
+
+
+<html>
+""")
